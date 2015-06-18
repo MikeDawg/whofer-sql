@@ -33,7 +33,34 @@ import sys
 import getopt
 import os
 import string
+import tempfile
 import whois
+import argparse
+
+#----
+
+parser = argparse.ArgumentParser(description='whofer by MikeDawg')
+parser.add_argument('-d','--domain', help='Domain Name',required=True)
+args = parser.parse_args()
+
+#---- Variables
+domain_name_from_user = (args.domain)
+current_working_directory = os.getcwd()
+#---- End Variables
+w = whois.whois(domain_name_from_user)
+emails_from_whois = (w.emails)
+
+#----
+tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_',text=True,dir=current_working_directory)
+fd = open(tempfile_output, 'w')
+try:
+    fd.writelines(["%s\n" % emails_from_whois])
+finally:
+    fd.close()
+
+
+
+
 
 
 

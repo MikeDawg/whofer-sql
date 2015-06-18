@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 
-#    whofr
+#    whofer
 #
 #    Copyright (C) 2015  Mike Harris
 #
@@ -21,5 +21,18 @@
 
 __version__ = '0.0.1'
 __author__ = 'Mike Harris, MikeDawg@gmail.com'
+
+__doc__ = """
+whofer https://www.556forensics.com https://github.com/MikeDawg/whofer
+
+by Mike Harris, MikeDawg
+"""
+import sys
+import getopt
+import os
+import string
+
+from lib.whois import *
+
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

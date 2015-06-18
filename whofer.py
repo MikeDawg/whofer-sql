@@ -51,18 +51,18 @@ w = whois.whois(domain_name_from_user)
 emails_from_whois = (w.emails)
 
 #----
-tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_',text=True,dir=current_working_directory)
-fd = open(tempfile_output, 'w')
+fileno, tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_',text=True,dir=current_working_directory)
+#print(tempfile_output)
 try:
-    fd.writelines(["%s\n" % emails_from_whois])
+    fd = open(tempfile_output, mode='w')
+    for item in emails_from_whois:
+        fd.write("%s\n" % item)
 finally:
     fd.close()
-
-
-
-
-
-
+    if os.path.isfile(tempfile_output):
+        os.remove(tempfile_output)
+    else:
+        print("Error: %s file not found" % tempfile_output)
 
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

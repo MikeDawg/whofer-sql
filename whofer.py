@@ -26,13 +26,16 @@ __doc__ = """
 whofer https://www.556forensics.com https://github.com/MikeDawg/whofer
 
 by Mike Harris, MikeDawg
+
+Requires python-whois https://pypi.python.org/pypi/python-whois https://bitbucket.org/richardpenman/pywhois
 """
 import sys
 import getopt
 import os
 import string
+import whois
 
-from lib.whois import *
+
 
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

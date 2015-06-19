@@ -36,6 +36,8 @@ import string
 import tempfile
 import whois
 import argparse
+import array
+import re
 
 #----
 
@@ -51,7 +53,7 @@ w = whois.whois(domain_name_from_user)
 emails_from_whois = (w.emails)
 
 #----
-fileno, tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_',text=True,dir=current_working_directory)
+fileno, tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_email_',text=True,dir=current_working_directory)
 #print(tempfile_output)
 try:
     fd = open(tempfile_output, mode='w')
@@ -59,10 +61,11 @@ try:
         fd.write("%s\n" % item)
 finally:
     fd.close()
-    if os.path.isfile(tempfile_output):
-        os.remove(tempfile_output)
-    else:
-        print("Error: %s file not found" % tempfile_output)
-
-
+    #if os.path.isfile(tempfile_output):
+        #os.remove(tempfile_output)
+    #else:
+        #print("Error: %s file not found" % tempfile_output)
+#----
+for item2 in emails_from_whois:
+    
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

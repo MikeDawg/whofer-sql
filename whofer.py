@@ -48,16 +48,17 @@ args = parser.parse_args()
 #---- Variables
 domain_name_from_user = (args.domain)
 current_working_directory = os.getcwd()
-#---- End Variables
 w = whois.whois(domain_name_from_user)
 emails_from_whois = (w.emails)
-
+#---- End Variables
 #----
 fileno, tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_email_',text=True,dir=current_working_directory)
-#print(tempfile_output)
+print(tempfile_output)
 try:
     fd = open(tempfile_output, mode='w')
     for item in emails_from_whois:
+        fd.write("%s" % domain_name_from_user)
+        fd.write("\t")
         fd.write("%s\n" % item)
 finally:
     fd.close()
@@ -66,6 +67,6 @@ finally:
     #else:
         #print("Error: %s file not found" % tempfile_output)
 #----
-for item2 in emails_from_whois:
+#for item2 in emails_from_whois:
     
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

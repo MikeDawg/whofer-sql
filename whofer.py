@@ -47,17 +47,18 @@ from datetime import datetime
 #----
 
 parser = argparse.ArgumentParser(description='whofer by MikeDawg')
-parser.add_argument('-d','--domain', help='Domain Name',required=True)
+parser.add_argument('-d', '--domain', help='Domain Name', required=True)
 args = parser.parse_args()
 
 #---- Variables
 datestr = "{0.year}-{00.month}-{0.day}".format(datetime.now())
 
+
 def my_random_string(string_length=10):
     """Returns a random string of length string_length."""
     random = str(uuid.uuid4())
     random = random.upper()
-    random = random.replace("-","")
+    random = random.replace("-", "")
     return random[0:string_length]
 #----
 random_string_name = my_random_string(6)
@@ -72,10 +73,11 @@ emails_from_whois = (w.emails)
 # -- Create db
 print db_name
 
+
 def mkdir_p(path):
     try:
         os.makedirs(path)
-    except OSError as exc: 
+    except OSError as exc:
         if exc.errno == errno.EEXIST and os.path.isdir(path):
             pass
         else:
@@ -83,7 +85,7 @@ def mkdir_p(path):
 #----
 filename = "./data"
 if (mkdir_p(filename)):
-        print "Created dir : %s" % (os.path.dirname(filename))
+    print "Created dir : %s" % (os.path.dirname(filename))
 
 db = sqlite3.connect('data/whofer.sqlite3')
 cursor = db.cursor()
@@ -91,15 +93,15 @@ cursor.execute('''
         Create TABLE IF NOT EXISTS whofer(id INTEGER PRIMARY KEY, URL TEXT, addy TEXT)
         ''')
 db.commit()
-    #----
+#----
 for item in emails_from_whois:
     cursor.execute('''INSERT INTO whofer(URL, addy)
-    VALUES(?,?)''', (domain_name_from_user,item))
+    VALUES(?,?)''', (domain_name_from_user, item))
     db.commit()
 #----
 db = sqlite3.connect('data/whofer.sqlite3')
 cursor.execute('''SELECT URL, addy FROM whofer''')
 for row in cursor:
     print('{0} : {1}'.format(row[0], row[1]))
-    
+
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

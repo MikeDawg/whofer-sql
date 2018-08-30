@@ -38,6 +38,8 @@ import whois
 import argparse
 import array
 import re
+import sqlite3
+from datetime import datetime
 
 #----
 
@@ -46,12 +48,17 @@ parser.add_argument('-d','--domain', help='Domain Name',required=True)
 args = parser.parse_args()
 
 #---- Variables
+datestr = "{0.year}-{0.month}-{0.day}".format(datetime.now())
+db_name = ("%s" % datestr)
 domain_name_from_user = (args.domain)
 current_working_directory = os.getcwd()
 w = whois.whois(domain_name_from_user)
 emails_from_whois = (w.emails)
 #---- End Variables
 #----
+# -- Create db
+print db_name
+
 fileno, tempfile_output = tempfile.mkstemp(suffix='.tmp',prefix='.whofer_email_',text=True,dir=current_working_directory)
 print(tempfile_output)
 try:
@@ -62,11 +69,6 @@ try:
         fd.write("%s\n" % item)
 finally:
     fd.close()
-    #if os.path.isfile(tempfile_output):
-        #os.remove(tempfile_output)
-    #else:
-        #print("Error: %s file not found" % tempfile_output)
 #----
-#for item2 in emails_from_whois:
     
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
